@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>MUFileReader</title>
+    <link rel="stylesheet" href="assets/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/mufilereader.css">
+  </head>
+  <body>
+    <h1>MUFileReader</h1>
+    
+    <hr>
+    <p>Drop a file below to test...</p>
+    Status: <span id='status'>Loading</span> 
+       <div class="progress progress-striped active">
+          <div class="progress-bar" id="progress-bar" style="width: 0%;"></div>
+      </div>
+       <input type="file" id="MuFile" name="file" />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" ></script>
+    <script src="https://rawgithub.com/mrdoob/three.js/master/build/three.js"></script>
+    <script src="packages/browser/interop.js"></script>
+    <script>
+      var scene = new THREE.Scene();
+      var camera = new THREE.PerspectiveCamera( 75, 500/500, 0.1, 1000 );
+      
+      var renderer = new THREE.CanvasRenderer();
+      
+      renderer.setSize( 500, 500);
+      document.body.appendChild( renderer.domElement );
+      
+      var target = null;
+      camera.position.z = 5;
+      
+      var render = function () {
+        requestAnimationFrame(render);
+        if (target != null) {
+            target.rotation.x += 0.01;
+            target.rotation.y += 0.01;
+        }
+        renderer.render(scene, camera);
+      };
+      
+
+      
+      function addData (verts, faces) {
+        var geom = new THREE.Geometry(); 
+        for (var i = 0; i < verts.length; i++) {
+          geom.vertices.push(new THREE.Vector3(verts[i][0], verts[i][1], verts[i][2]));
+        }
+        for (var i = 0; i < faces.length; i++) {
+          geom.faces.push(new THREE.Face3(faces[i][0], faces[i][1], faces[i][2]))
+        }
+        geom.computeFaceNormals();
+        var object = new THREE.Mesh( geom, new THREE.MeshBasicMaterial({color: 'red', wireframe:true}));
+        target = object;
+        scene.add(object);
+      }
+      
+      render();
+    </script>
+    <script src="assets/bootstrap.min.js" ></script>
+    <script type="application/dart" src="mureaderhtml.dart"></script>
+    <script src="packages/browser/dart.js"></script>
+  </body>
+</html>
