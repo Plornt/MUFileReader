@@ -41,22 +41,46 @@
         renderer.render(scene, camera);
       };
       
-
-      
-      function addData (verts, faces) {
-        var geom = new THREE.Geometry(); 
-        for (var i = 0; i < verts.length; i++) {
-          geom.vertices.push(new THREE.Vector3(verts[i][0], verts[i][1], verts[i][2]));
+      var MuObjects = {};
+      function recurseData (name, l) {
+        console.log("Recursing!");
+        if (l.length == 6) {
+          var geom = new THREE.Geometry();
+          if (l[3] != null) {
+            var verts = l[3];
+            for (var i = 0; i < verts.length; i++) {
+              geom.vertices.push(new THREE.Vector3(verts[i][0], verts[i][1], verts[i][2]));
+            }
+            var faces = l[4];
+            for (var i = 0; i < faces.length; i++) {
+              geom.faces.push(new THREE.Face3(faces[i][0], faces[i][1], faces[i][2]))
+            }
+            geom.computeFaceNormals();
+          }
+          var mesh = new THREE.Mesh( geom, new THREE.MeshBasicMaterial({color: 'red', wireframe:true}));
+          mesh.position = new THREE.Vector3(l[0][0], l[0][1], l[0][2]);
+          mesh.useQuaternion = true;
+          mesh.quaternion = new THREE.Quaternion(l[1][0],l[1][1],l[1][2],l[1][3]);
+          mesh.scale.set(l[2][0],l[2][1],l[2][2]);
+          mesh.updateMatrix();
+          if (l[5].length != 0) {
+           for (var i = 0; i < l[5].length; i++) {
+             mesh.add(recurseData(name, l[5][i]));
+           }   
+          }
+          return mesh;
         }
-        for (var i = 0; i < faces.length; i++) {
-          geom.faces.push(new THREE.Face3(faces[i][0], faces[i][1], faces[i][2]))
+        else {
+          throw "Error, could not load mesh data into 3D Renderer " + l.length;
         }
-        geom.computeFaceNormals();
-        var object = new THREE.Mesh( geom, new THREE.MeshBasicMaterial({color: 'red', wireframe:true}));
-        target = object;
-        scene.add(object);
       }
-      
+      function addData (name, data) {
+          console.log(data);
+          MuObjects[name] = new THREE.Object3D();
+          MuObjects[name].add(recurseData(name, data));
+          scene.add(MuObjects[name]);
+          target = MuObjects[name];
+      }
       render();
     </script>
     <script src="assets/bootstrap.min.js" ></script>

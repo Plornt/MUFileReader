@@ -52,14 +52,20 @@ void setProgress(num percent) {
 }
 void complete(Mu mu) {
   String space = "";
-  mu.obj.children.forEach((MuObject child) { 
-   print("${child.shared_mesh == null} that this mesh does not actually have any verticies :/");
-   if (child.shared_mesh != null) { 
-    if (child.shared_mesh.verts != null) { 
-     var mappedVerts = js.array(child.shared_mesh.verts);
-     var mappedFaces = js.array(child.shared_mesh.submeshes);
-     js.context.addData(mappedVerts, mappedFaces);
-    }
-   }
+  List<dynamic> r = recurseChild(mu.obj);
+  
+  js.context.addData(mu.name, js.array(r));
+}
+List<dynamic> recurseChild(MuObject parent) {
+  List<dynamic> currArray = new List<dynamic>();
+  List<dynamic> childArray = new List<dynamic>();
+  parent.children.forEach((MuObject child) { 
+    childArray.add(recurseChild(child));
   });
+  if (parent.shared_mesh != null) {
+  return [parent.transform.localPosition,parent.transform.localRotation.toList(), parent.transform.localScale, parent.shared_mesh.verts, parent.shared_mesh.submeshes, childArray];
+  }
+  else {
+    return [parent.transform.localPosition,parent.transform.localRotation.toList(), parent.transform.localScale, null, null, childArray];
+  }
 }

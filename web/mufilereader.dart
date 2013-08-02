@@ -143,6 +143,7 @@ class MuTexture {
   int type;
   MuTexture() {}
   MuTexture.read(Mu mu) {
+    print("Read => ${this.runtimeType}");
     this.name = mu.read_string();
     this.type = mu.read_int();
   }
@@ -158,6 +159,7 @@ class MuMatTex {
   List<num> offset;
   MuMatTex() {}
   MuMatTex.read(Mu mu) {
+    print("Read => ${this.runtimeType}");
     this.index = mu.read_int();
     this.scale = mu.read_floatlist(2);
     this.offset = mu.read_floatlist(2);
@@ -186,6 +188,7 @@ class MuMaterial {
   MuMaterial() {}
   
   MuMaterial.read(Mu mu) {
+    print("Read => ${this.runtimeType}");
     this.name = mu.read_string();
     this.type = mu.read_int();
     if (this.type == MuEnum.ST_SPECULAR) {
@@ -336,10 +339,12 @@ class MuTransform {
   
   MuTransform() {}
   MuTransform.read(Mu mu) {
+    print("Read => ${this.runtimeType}");
     this.name = mu.read_string();
     this.localPosition = mu.read_vector();
     this.localRotation = mu.read_quaternion();
     this.localScale = mu.read_vector();
+    print("End MuTransform");
   }
   void write(Mu mu) {
     mu.write_string(this.name);
@@ -355,6 +360,7 @@ class MuTagLayer {
   int layer;
   MuTagLayer() {}
   MuTagLayer.read(Mu mu) {
+    print("Read => ${this.runtimeType}");
     this.tag = mu.read_string();
     this.layer = mu.read_int();
   }
@@ -372,6 +378,7 @@ class MuKey {
   int tangentMode;
   MuKey() {}
   MuKey.read(Mu mu) {
+    print("Read => ${this.runtimeType}");
     this.time = mu.read_float();
     this.value = mu.read_float();
     this.tangent = mu.read_floatlist(2);
@@ -394,6 +401,7 @@ class MuCurve {
   List<MuKey> keys = new List<MuKey>();
   MuCurve() {}
   MuCurve.read(Mu mu) {
+    print("Read => ${this.runtimeType}");
     this.path = mu.read_string();
     this.property = mu.read_string();
     this.type = mu.read_int();
@@ -423,6 +431,7 @@ class MuClip {
   List<MuCurve> curves = new List<MuCurve>();
   MuClip() {}
   MuClip.read(Mu mu) {
+    print("Read => ${this.runtimeType}");
     this.name = mu.read_string();
     this.lbCenter = mu.read_vector();
     this.lbSize = mu.read_vector();
@@ -451,6 +460,7 @@ class MuAnimation {
     int autoPlay;
     MuAnimation() {}
     MuAnimation.read(Mu mu) {
+      print("Read => ${this.runtimeType}");
       int num_clips = mu.read_int();
       for (int i = 0; i < num_clips; i++) {
          clips.add(new MuClip.read(mu));
@@ -476,6 +486,7 @@ class MuBoneWeight {
   List<num> weights = new List<num>();
   MuBoneWeight() {}
   MuBoneWeight.read(Mu mu) {
+    print("Read => ${this.runtimeType}");
     for (int i = 0; i < 4; i++) {
       this.indices.add(mu.read_int());
       this.weights.add(mu.read_float());
@@ -500,52 +511,63 @@ class MuMesh {
   List<List<int>> submeshes = new List<List<int>>();
   MuMesh() {}
   MuMesh.read(Mu mu) {
+    print("Read => ${this.runtimeType}");
     int start = mu.read_int();
     if (start != MuEnum.ET_MESH_START) {
       throw "Not the start of a mesh";;
     }
     int num_verts = mu.read_int();
     int submesh_count = mu.read_int();
-    int type = mu.read_int();
-    while (type != MuEnum.ET_MESH_END) {
+    while (true) {
+        int type = mu.read_int();
+        if (type == MuEnum.ET_MESH_END){
+          break;
+        }
         if (type == MuEnum.ET_MESH_VERTS) {
-          
+            print("MuMesh VERT");
             for (int i = 0; i < num_verts; i++) {
                 this.verts.add(mu.read_vector());
             }
         }
         else if (type == MuEnum.ET_MESH_UV) {
+          print("MuMesh UV");
             for (int i = 0; i < num_verts; i++) {
                 this.uvs.add(mu.read_floatlist(2));
             }
         }
         else if (type == MuEnum.ET_MESH_UV2) {
+          print("MuMesh UV2");
             for (int i = 0; i < num_verts; i++) {
                 this.uv2s.add(mu.read_floatlist(2));
             }
         }
         else if (type == MuEnum.ET_MESH_NORMALS) {
+          print("MuMesh NORMALS");
             for (int i = 0; i < num_verts; i++) {
                 this.normals.add(mu.read_vector());
             }
         }
         else if (type == MuEnum.ET_MESH_TANGENTS) {
+          print("MuMesh TANGENTS");
             for (int i = 0; i < num_verts; i++) {
                 this.tangents.add(mu.read_quaternion()); //TODO: FIX ME! NOT A QUATERNION
             }
         }
         else if (type == MuEnum.ET_MESH_BONE_WEIGHTS) {
+          print("MuMesh WEIGHTS");
             for (int i = 0; i < num_verts; i++) {
                 this.boneWeights.add(new MuBoneWeight.read(mu));
             }
         }
         else if (type == MuEnum.ET_MESH_BIND_POSES) {
+          print("MuMesh BIND POSES");
             int num_poses = mu.read_int();
             for (int i = 0; i < num_poses; i++) {
                 this.bindPoses.add(mu.read_floatlist(12));
             }
         }
         else if (type == MuEnum.ET_MESH_TRIANGLES) {
+          print("MuMesh TRIANGLES");
             int num_tris = mu.read_int();
             for (int i = 0; i < (num_tris / 3); i++) {
                 this.submeshes.add(mu.read_intlist(3));
@@ -554,7 +576,6 @@ class MuMesh {
         else {
           throw "Value Error: $type is not a subtype of MuMesh";
         }
-        type = mu.read_int();
     }
   }
   void write(Mu mu) {
@@ -619,6 +640,7 @@ class MuRenderer {
   List<int> materials;
   MuRenderer() {}
   MuRenderer.read(Mu mu) {
+    print("Read => ${this.runtimeType}");
     if (mu.version > 0) {
       castShadows = mu.read_byte();
       receiveShadows = mu.read_byte();
@@ -647,6 +669,7 @@ class MuSkinnedMeshRenderer {
   MuMesh mesh;
   MuSkinnedMeshRenderer() {}
   MuSkinnedMeshRenderer.read(Mu mu) {
+    print("Read => ${this.runtimeType}");
     int num_mat = mu.read_int();
     for (int i = 0; i < num_mat; i++) {
       this.materials.add(mu.read_int());
@@ -691,6 +714,7 @@ class MuColliderMesh extends MuCollider_Base {
     MuMesh mesh;
     MuColliderMesh (int type):super(type) { }
     MuColliderMesh.read(int type, Mu mu):super(type) {
+      print("Read => ${this.runtimeType}");
       this.isTrigger = mu.read_byte();
       this.convex = mu.read_byte();
       this.mesh = new MuMesh.read(mu);
@@ -716,6 +740,7 @@ class MuColliderSphere extends MuCollider_Base {
   List<double> center;
   MuColliderSphere (int type):super(type) { }
   MuColliderSphere.read(int type, Mu mu):super(type) {
+    print("Read => ${this.runtimeType}");
     this.isTrigger = mu.read_byte();
     this.radius = mu.read_float();
     this.center = mu.read_vector();
@@ -743,6 +768,7 @@ class MuColliderCapsule extends MuCollider_Base {
   
   MuColliderCapsule (int type):super(type) { }
   MuColliderCapsule.read(int type, Mu mu):super(type) {
+    print("Read => ${this.runtimeType}");
     this.isTrigger = mu.read_byte();
     this.radius = mu.read_float();
     this.height = mu.read_float();
@@ -773,6 +799,7 @@ class MuColliderBox extends MuCollider_Base {
   List<double> center;
   MuColliderBox (int type):super(type) { }
   MuColliderBox.read(int type, Mu mu):super(type) {
+    print("Read => ${this.runtimeType}");
      this.isTrigger = mu.read_byte();
      this.size = mu.read_vector();
      this.center = mu.read_vector();
@@ -797,6 +824,7 @@ class MuSpring {
   num targetPosition;
   MuSpring() {}
   MuSpring.read(Mu mu) {
+    print("Read => ${this.runtimeType}");
     this.spring = mu.read_float();
     this.damper = mu.read_float();
     this.targetPosition = mu.read_float();
@@ -817,6 +845,7 @@ class MuFriction {
   num stiffness;
   MuFriction() {}
   MuFriction.read(Mu mu) {
+    print("Read => ${this.runtimeType}");
     this.extremumSlip = mu.read_float();
     this.extremumValue = mu.read_float();
     this.asymptoteSlip = mu.read_float();
@@ -843,6 +872,7 @@ class MuColliderWheel extends MuCollider_Base {
   MuFriction sidewaysFriction;
   MuColliderWheel ():super(0) { }
   MuColliderWheel.read(Mu mu):super(0) {
+    print("Read => ${this.runtimeType}");
     this.mass = mu.read_float();
     this.radius = mu.read_float();
     this.suspensionDistance = mu.read_float();
@@ -852,6 +882,7 @@ class MuColliderWheel extends MuCollider_Base {
     this.sidewaysFriction = new MuFriction.read(mu);
   }
   void write(Mu mu) {
+    print("Read => ${this.runtimeType}");
     mu.write_int(MuEnum.ET_WHEEL_COLLIDER);
     mu.write_float(this.mass);
     mu.write_float(this.radius);
@@ -909,6 +940,7 @@ class MuCamera {
   
   MuCamera() {}
   MuCamera.read(Mu mu) {
+    print("Read => ${this.runtimeType}");
     this.clearFlags = mu.read_int();
     this.backgroundColor = mu.read_floatlist(4);
     this.cullingMask = mu.read_int();
@@ -941,6 +973,7 @@ class MuLight {
   num spotAngle;
   MuLight() {}
   MuLight.read(Mu mu) {
+    print("Read => ${this.runtimeType}");
     this.type = mu.read_int();
     this.intensity = mu.read_float();
     this.range = mu.read_float();
@@ -960,6 +993,7 @@ class MuLight {
 
 }
 
+
 class MuObject {
   String name;
   List<MuObject> children = new List<MuObject>();
@@ -976,46 +1010,62 @@ class MuObject {
   MuLight light;
   MuObject ([String this.name = ""]) {}
   MuObject.read(Mu mu) {
+    print("Read => ${this.runtimeType}");
     this.transform = new MuTransform.read(mu);
+    print("END MU TRANSFORM -----------------------");
     while (mu.canReadMore()) {
       int entryType = mu.read_int();
+      print("TYPE: $entryType");
       if (entryType == MuEnum.ET_CHILD_TRANSFORM_START) {
+
+        print("MuObject START");
         this.children.add(new MuObject.read(mu));
       }
       else if (entryType == MuEnum.ET_CHILD_TRANSFORM_END) {
-        
+        print("MuObject END TRANSFORM");
+        break;
       }
       else if (entryType == MuEnum.ET_TAG_AND_LAYER) {
+        print("MuObject TAG & LAYER");
         this.tag_and_layer = new MuTagLayer.read(mu);
       }
       else if (muColliders.contains(entryType)) {
+        print("MuObject COLLIDER");
         this.collider = MuCollider(mu, entryType);
       }
       else if (entryType == MuEnum.ET_MESH_FILTER) { 
+        print("MuObject MESH FILTER");
         this.shared_mesh = new MuMesh.read(mu);
       }
       else if (entryType == MuEnum.ET_MESH_RENDERER) {
+        print("MuObject MESH RENDERER");
         this.renderer = new MuRenderer.read(mu);
       }
       else if (entryType == MuEnum.ET_SKINNED_MESH_RENDERER) {
+        print("MuObject SKINNED MESH RENDERER");
         this.skinned_mesh_renderer = new MuSkinnedMeshRenderer.read(mu);
       }
       else if (entryType == MuEnum.ET_ANIMATION) {
+        print("MuObject ANIMATION");
         this.animation = new MuAnimation.read(mu);
       }
       else if (entryType == MuEnum.ET_CAMERA) {
+        print("MuObject CAMERA");
         this.camera = new MuCamera.read(mu);
       }
       else if (entryType == MuEnum.ET_LIGHT) {
+        print("MuObject LIGHT");
         this.light = new MuLight.read(mu);
       }
       else if (entryType == MuEnum.ET_MATERIALS) {
+        print("MuObject MATERIALS");
         int mat_count = mu.read_int();
         for (int i = 0; i < mat_count; i++) {
           this.materials.add(new MuMaterial.read(mu));
         }
       }
       else if (entryType == MuEnum.ET_TEXTURES) {
+        print("MuObject TEXTURES");
         int tex_count = mu.read_int();
         for (int i = 0; i < tex_count; i++) {
           this.textures.add(new MuTexture.read(mu));
@@ -1075,6 +1125,10 @@ class Quaternion {
   Quaternion (this.x, this.y, this.z, this.w) {
     
   }
+  
+  List<num> toList () {
+    return [x, y, z, w];
+  }
 }
 
 class ByteFile {
@@ -1102,6 +1156,9 @@ class ByteFile {
   }
   bool canReadMore() {
     return data.length > offset;
+  }
+  int peek_byte () {
+    return data[offset+1];
   }
   int read_byte() {
     return data[offset++];
@@ -1154,11 +1211,22 @@ class ByteFile {
   }
   
   String read_string() {
+
+    print("Old Offset: $_offset");
     int length = this.read_byte();
     if ((data.length - offset) < length) {
       throw "End of file exception";
     }
-    return decodeUtf8(this.read_bytes(length));
+    if (length == 0) {
+      print("Found no string");
+      print("New Offset: $_offset");
+      return "";
+    }
+    print("New Offset: $_offset Length: $length");
+    String dat = decodeUtf8(this.read_bytes(length));
+    print("String read -> $dat");
+    print("Newer Offset: $_offset");
+    return dat;
   } 
   List<double> read_vector () {
     return this.read_floatlist(3);

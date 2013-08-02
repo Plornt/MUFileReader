@@ -129,238 +129,21 @@ init.mangledNames = {$$dom_initCustomEvent$4: "$dom_initCustomEvent:4:0", $$dom_
 })([
 ["MuReader", "mufilereader.dart", , {
 MuCollider: function(mu, type) {
-  var t1, t2, t3, t4, t5, t6;
-  if (type === $.MuEnum_ET_MESH_COLLIDER || type === $.MuEnum_ET_MESH_COLLIDER2) {
-    t1 = type === $.MuEnum_ET_MESH_COLLIDER2 ? 1 : 0;
-    t1 = new $.MuColliderMesh(null, null, null, t1);
-    t2 = mu.data;
-    if (typeof t2 !== "string" && (typeof t2 !== "object" || t2 === null || t2.constructor !== Array && !$.isJsIndexable(t2, t2[$.dispatchPropertyName])))
-      return $.MuCollider$bailout(1, mu, t1, t2);
-    t3 = mu._liblib6$_offset;
-    if (typeof t3 !== "number")
-      return $.MuCollider$bailout(2, mu, t1, t2, t3);
-    t4 = t3 + 1;
-    t5 = mu.progressCallback != null;
-    if (t5) {
-      t6 = mu.fileLength;
-      if (typeof t6 !== "number")
-        return $.MuCollider$bailout(4, mu, t1, t2, t3, t4, t5, t3, t6);
-      mu.progressCallback$1($.JSNumber_methods.round$0(t3 / (t6 / 100)));
-    }
-    mu._liblib6$_offset = t4;
-    t4 = $.getInterceptor(t2);
-    if (t3 >>> 0 !== t3 || t3 >= t2.length)
-      throw $.ioore(t3);
-    t1.isTrigger = t2[t3];
-    t3 = mu._liblib6$_offset;
-    if (typeof t3 !== "number")
-      return $.MuCollider$bailout(5, mu, t1, t2, t3, t4, t5);
-    t6 = t3 + 1;
-    if (t5) {
-      t5 = mu.fileLength;
-      if (typeof t5 !== "number")
-        return $.MuCollider$bailout(7, mu, t1, t2, t3, t4, t3, t6, t5);
-      mu.progressCallback$1($.JSNumber_methods.round$0(t3 / (t5 / 100)));
-    }
-    mu._liblib6$_offset = t6;
-    if (t3 >>> 0 !== t3 || t3 >= t2.length)
-      throw $.ioore(t3);
-    t1.convex = t2[t3];
-    t1.mesh = $.MuMesh$read(mu);
-    return t1;
-  } else if (type === $.MuEnum_ET_SPHERE_COLLIDER || type === $.MuEnum_ET_SPHERE_COLLIDER2) {
-    t1 = type === $.MuEnum_ET_SPHERE_COLLIDER2 ? 1 : 0;
-    t1 = new $.MuColliderSphere(null, null, null, t1);
-    t2 = mu.data;
-    if (typeof t2 !== "string" && (typeof t2 !== "object" || t2 === null || t2.constructor !== Array && !$.isJsIndexable(t2, t2[$.dispatchPropertyName])))
-      return $.MuCollider$bailout(8, mu, t1, t2);
-    t3 = mu._liblib6$_offset;
-    if (typeof t3 !== "number")
-      return $.MuCollider$bailout(9, mu, t1, t2, t3);
-    t4 = t3 + 1;
-    if (mu.progressCallback != null) {
-      t5 = mu.fileLength;
-      if (typeof t5 !== "number")
-        return $.MuCollider$bailout(11, mu, t1, t2, t3, t4, t3, t5);
-      mu.progressCallback$1($.JSNumber_methods.round$0(t3 / (t5 / 100)));
-    }
-    mu._liblib6$_offset = t4;
-    if (t3 >>> 0 !== t3 || t3 >= t2.length)
-      throw $.ioore(t3);
-    t1.isTrigger = t2[t3];
-    t1.radius = mu.read_float$0();
-    t1.center = mu.read_floatlist$1(3);
-    return t1;
-  } else if (type === $.MuEnum_ET_CAPSULE_COLLIDER || type === $.MuEnum_ET_CAPSULE_COLLIDER2)
+  if (type === $.MuEnum_ET_MESH_COLLIDER || type === $.MuEnum_ET_MESH_COLLIDER2)
+    return $.MuColliderMesh$read(type === $.MuEnum_ET_MESH_COLLIDER2 ? 1 : 0, mu);
+  else if (type === $.MuEnum_ET_SPHERE_COLLIDER || type === $.MuEnum_ET_SPHERE_COLLIDER2)
+    return $.MuColliderSphere$read(type === $.MuEnum_ET_SPHERE_COLLIDER2 ? 1 : 0, mu);
+  else if (type === $.MuEnum_ET_CAPSULE_COLLIDER || type === $.MuEnum_ET_CAPSULE_COLLIDER2)
     return $.MuColliderCapsule$read(type === $.MuEnum_ET_CAPSULE_COLLIDER2 ? 1 : 0, mu);
-  else if (type === $.MuEnum_ET_BOX_COLLIDER || type === $.MuEnum_ET_BOX_COLLIDER2) {
-    t1 = type === $.MuEnum_ET_BOX_COLLIDER2 ? 1 : 0;
-    t1 = new $.MuColliderBox(null, null, null, t1);
-    t2 = mu.data;
-    if (typeof t2 !== "string" && (typeof t2 !== "object" || t2 === null || t2.constructor !== Array && !$.isJsIndexable(t2, t2[$.dispatchPropertyName])))
-      return $.MuCollider$bailout(12, mu, t1, t2);
-    t3 = mu._liblib6$_offset;
-    if (typeof t3 !== "number")
-      return $.MuCollider$bailout(13, mu, t1, t2, t3);
-    t4 = t3 + 1;
-    if (mu.progressCallback != null) {
-      t5 = mu.fileLength;
-      if (typeof t5 !== "number")
-        return $.MuCollider$bailout(15, mu, t1, t2, t3, t4, t3, t5);
-      mu.progressCallback$1($.JSNumber_methods.round$0(t3 / (t5 / 100)));
-    }
-    mu._liblib6$_offset = t4;
-    if (t3 >>> 0 !== t3 || t3 >= t2.length)
-      throw $.ioore(t3);
-    t1.isTrigger = t2[t3];
-    t1.size = mu.read_floatlist$1(3);
-    t1.center = mu.read_floatlist$1(3);
-    return t1;
-  } else if (type === $.MuEnum_ET_WHEEL_COLLIDER)
+  else if (type === $.MuEnum_ET_BOX_COLLIDER || type === $.MuEnum_ET_BOX_COLLIDER2)
+    return $.MuColliderBox$read(type === $.MuEnum_ET_BOX_COLLIDER2 ? 1 : 0, mu);
+  else if (type === $.MuEnum_ET_WHEEL_COLLIDER)
     return $.MuColliderWheel$read(mu);
   else
     throw $.wrapException("Value Error: MuCollider " + type);
 },
 
 "+MuCollider:2:0": 0,
-
-MuCollider$bailout: function(state0, mu, t1, t2, t3, t4, t5, t6, t7) {
-  switch (state0) {
-    case 0:
-    default:
-      if (state0 === 7 || state0 === 6 || state0 === 5 || state0 === 4 || state0 === 3 || state0 === 2 || state0 === 1 || state0 === 0 && (type === $.MuEnum_ET_MESH_COLLIDER || type === $.MuEnum_ET_MESH_COLLIDER2))
-        switch (state0) {
-          case 0:
-            t1 = type === $.MuEnum_ET_MESH_COLLIDER2 ? 1 : 0;
-            t1 = new $.MuColliderMesh(null, null, null, t1);
-            t2 = mu.data;
-          case 1:
-            state0 = 0;
-            t3 = mu._liblib6$_offset;
-          case 2:
-            state0 = 0;
-            t4 = $.$add$ns(t3, 1);
-            t5 = mu.progressCallback != null;
-          default:
-            if (state0 === 4 || state0 === 3 || state0 === 0 && t5)
-              switch (state0) {
-                case 0:
-                  t6 = mu._liblib6$_offset;
-                case 3:
-                  state0 = 0;
-                  t7 = mu.fileLength;
-                case 4:
-                  state0 = 0;
-                  mu.progressCallback$1($.round$0$nx($.$div$n(t6, $.$div$n(t7, 100))));
-              }
-            mu._liblib6$_offset = t4;
-            t4 = $.getInterceptor$asx(t2);
-            t1.isTrigger = t4.$index(t2, t3);
-            t3 = mu._liblib6$_offset;
-          case 5:
-            state0 = 0;
-            t6 = $.$add$ns(t3, 1);
-          case 6:
-          case 7:
-            if (state0 === 7 || state0 === 6 || state0 === 0 && t5)
-              switch (state0) {
-                case 0:
-                  t5 = mu._liblib6$_offset;
-                case 6:
-                  state0 = 0;
-                  t7 = mu.fileLength;
-                case 7:
-                  state0 = 0;
-                  mu.progressCallback$1($.round$0$nx($.$div$n(t5, $.$div$n(t7, 100))));
-              }
-            mu._liblib6$_offset = t6;
-            t1.convex = t4.$index(t2, t3);
-            t1.mesh = $.MuMesh$read(mu);
-            return t1;
-        }
-      else
-        switch (state0) {
-          case 0:
-          default:
-            if (state0 === 11 || state0 === 10 || state0 === 9 || state0 === 8 || state0 === 0 && (type === $.MuEnum_ET_SPHERE_COLLIDER || type === $.MuEnum_ET_SPHERE_COLLIDER2))
-              switch (state0) {
-                case 0:
-                  t1 = type === $.MuEnum_ET_SPHERE_COLLIDER2 ? 1 : 0;
-                  t1 = new $.MuColliderSphere(null, null, null, t1);
-                  t2 = mu.data;
-                case 8:
-                  state0 = 0;
-                  t3 = mu._liblib6$_offset;
-                case 9:
-                  state0 = 0;
-                  t4 = $.$add$ns(t3, 1);
-                default:
-                  if (state0 === 11 || state0 === 10 || state0 === 0 && mu.progressCallback != null)
-                    switch (state0) {
-                      case 0:
-                        t5 = mu._liblib6$_offset;
-                      case 10:
-                        state0 = 0;
-                        t6 = mu.fileLength;
-                      case 11:
-                        state0 = 0;
-                        mu.progressCallback$1($.round$0$nx($.$div$n(t5, $.$div$n(t6, 100))));
-                    }
-                  mu._liblib6$_offset = t4;
-                  t1.isTrigger = $.$index$asx(t2, t3);
-                  t1.radius = mu.read_float$0();
-                  t1.center = mu.read_floatlist$1(3);
-                  return t1;
-              }
-            else
-              switch (state0) {
-                case 0:
-                default:
-                  if (state0 === 0 && (type === $.MuEnum_ET_CAPSULE_COLLIDER || type === $.MuEnum_ET_CAPSULE_COLLIDER2))
-                    return $.MuColliderCapsule$read(type === $.MuEnum_ET_CAPSULE_COLLIDER2 ? 1 : 0, mu);
-                  else
-                    switch (state0) {
-                      case 0:
-                      default:
-                        if (state0 === 15 || state0 === 14 || state0 === 13 || state0 === 12 || state0 === 0 && (type === $.MuEnum_ET_BOX_COLLIDER || type === $.MuEnum_ET_BOX_COLLIDER2))
-                          switch (state0) {
-                            case 0:
-                              t1 = type === $.MuEnum_ET_BOX_COLLIDER2 ? 1 : 0;
-                              t1 = new $.MuColliderBox(null, null, null, t1);
-                              t2 = mu.data;
-                            case 12:
-                              state0 = 0;
-                              t3 = mu._liblib6$_offset;
-                            case 13:
-                              state0 = 0;
-                              t4 = $.$add$ns(t3, 1);
-                            default:
-                              if (state0 === 15 || state0 === 14 || state0 === 0 && mu.progressCallback != null)
-                                switch (state0) {
-                                  case 0:
-                                    t5 = mu._liblib6$_offset;
-                                  case 14:
-                                    state0 = 0;
-                                    t6 = mu.fileLength;
-                                  case 15:
-                                    state0 = 0;
-                                    mu.progressCallback$1($.round$0$nx($.$div$n(t5, $.$div$n(t6, 100))));
-                                }
-                              mu._liblib6$_offset = t4;
-                              t1.isTrigger = $.$index$asx(t2, t3);
-                              t1.size = mu.read_floatlist$1(3);
-                              t1.center = mu.read_floatlist$1(3);
-                              return t1;
-                          }
-                        else if (type === $.MuEnum_ET_WHEEL_COLLIDER)
-                          return $.MuColliderWheel$read(mu);
-                        else
-                          throw $.wrapException("Value Error: MuCollider " + type);
-                    }
-              }
-        }
-  }
-},
 
 MuTexture: {"": "Object;name,type"},
 
@@ -374,6 +157,7 @@ MuMatTex: {"": "Object;index,scale,offset",
   },
   "+write:1:0": 0,
   MuMatTex$read$1: function(mu) {
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
     this.index = mu.read_int$0();
     this.scale = mu.read_floatlist$1(2);
     this.offset = mu.read_floatlist$1(2);
@@ -533,6 +317,7 @@ MuMaterial: {"": "Object;name,type,mainTex,specColor,shininess,bumpMap,emissive,
   "+write:1:0": 0,
   MuMaterial$read$1: function(mu) {
     var t1;
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
     this.name = mu.read_string$0();
     this.type = mu.read_int$0();
     t1 = this.type;
@@ -612,6 +397,7 @@ MuTransform: {"": "Object;name,localPosition,localRotation,localScale",
   },
   "+write:1:0": 0,
   MuTransform$read$1: function(mu) {
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
     this.name = mu.read_string$0();
     this.localPosition = mu.read_floatlist$1(3);
     this.localRotation = mu.read_quaternion$0();
@@ -648,7 +434,23 @@ MuKey: {"": "Object;time,value,tangent,tangentMode",
     mu.write_floatlist$1(this.tangent);
     mu.write_int$1(this.tangentMode);
   },
-  "+write:1:0": 0
+  "+write:1:0": 0,
+  MuKey$read$1: function(mu) {
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
+    this.time = mu.read_float$0();
+    this.value = mu.read_float$0();
+    this.tangent = mu.read_floatlist$1(2);
+    this.tangentMode = mu.read_int$0();
+  },
+  static: {
+MuKey$read: function(mu) {
+  var t1 = new $.MuKey(null, null, null, null);
+  t1.MuKey$read$1(mu);
+  return t1;
+},
+
+"+new MuKey$read:1:0": 0}
+
 },
 
 "+MuKey": 0,
@@ -666,20 +468,15 @@ MuCurve: {"": "Object;path,property,type,wrapMode,keys",
   },
   "+write:1:0": 0,
   MuCurve$read$1: function(mu) {
-    var num_keys, t1, i, t2;
+    var num_keys, t1, i;
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
     this.path = mu.read_string$0();
     this.property = mu.read_string$0();
     this.type = mu.read_int$0();
     this.wrapMode = mu.read_intlist$1(2);
     num_keys = mu.read_int$0();
-    for (t1 = this.keys, i = 0; i < num_keys; ++i) {
-      t2 = new $.MuKey(null, null, null, null);
-      t2.time = mu.read_float$0();
-      t2.value = mu.read_float$0();
-      t2.tangent = mu.read_floatlist$1(2);
-      t2.tangentMode = mu.read_int$0();
-      t1.push(t2);
-    }
+    for (t1 = this.keys, i = 0; i < num_keys; ++i)
+      t1.push($.MuKey$read(mu));
   },
   static: {
 MuCurve$read: function(mu) {
@@ -720,6 +517,7 @@ MuClip: {"": "Object;name,lbCenter,lbSize,wrapMode,curves",
   "+write:1:0": 0,
   MuClip$read$1: function(mu) {
     var num_curves, t1, i;
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
     this.name = mu.read_string$0();
     this.lbCenter = mu.read_floatlist$1(3);
     this.lbSize = mu.read_floatlist$1(3);
@@ -766,6 +564,7 @@ MuAnimation: {"": "Object;clips,clip,autoPlay",
   "+write:1:0": 0,
   MuAnimation$read$1: function(mu) {
     var num_clips, t1, i;
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
     num_clips = mu.read_int$0();
     for (t1 = this.clips, i = 0; i < num_clips; ++i)
       t1.push($.MuClip$read(mu));
@@ -814,6 +613,7 @@ MuBoneWeight: {"": "Object;indices,weights",
   "+write:1:0": 0,
   MuBoneWeight$read$1: function(mu) {
     var t1, t2, i;
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
     for (t1 = this.indices, t2 = this.weights, i = 0; i < 4; ++i) {
       t1.push(mu.read_int$0());
       t2.push(mu.read_float$0());
@@ -882,41 +682,51 @@ MuMesh: {"": "Object;verts<,uvs,uv2s,normals,tangents,boneWeights,bindPoses,subm
   },
   "+write:1:0": 0,
   MuMesh$read$1: function(mu) {
-    var num_verts, type, t1, t2, t3, t4, t5, t6, t7, t8, i, num_poses, t9;
+    var num_verts, t1, t2, t3, t4, t5, t6, t7, t8, type, i, num_poses, t9;
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
     if (mu.read_int$0() !== $.MuEnum_ET_MESH_START)
       throw $.wrapException("Not the start of a mesh");
     num_verts = mu.read_int$0();
     mu.read_int$0();
-    type = mu.read_int$0();
-    for (t1 = this.verts, t2 = this.uvs, t3 = this.uv2s, t4 = this.normals, t5 = this.tangents, t6 = this.boneWeights, t7 = this.bindPoses, t8 = this.submeshes; type !== $.MuEnum_ET_MESH_END;) {
-      if (type === $.MuEnum_ET_MESH_VERTS)
+    for (t1 = this.verts, t2 = this.uvs, t3 = this.uv2s, t4 = this.normals, t5 = this.tangents, t6 = this.boneWeights, t7 = this.bindPoses, t8 = this.submeshes; true;) {
+      type = mu.read_int$0();
+      if (type === $.MuEnum_ET_MESH_END)
+        break;
+      if (type === $.MuEnum_ET_MESH_VERTS) {
+        $.Primitives_printString("MuMesh VERT");
         for (i = 0; i < num_verts; ++i)
           t1.push(mu.read_floatlist$1(3));
-      else if (type === $.MuEnum_ET_MESH_UV)
+      } else if (type === $.MuEnum_ET_MESH_UV) {
+        $.Primitives_printString("MuMesh UV");
         for (i = 0; i < num_verts; ++i)
           t2.push(mu.read_floatlist$1(2));
-      else if (type === $.MuEnum_ET_MESH_UV2)
+      } else if (type === $.MuEnum_ET_MESH_UV2) {
+        $.Primitives_printString("MuMesh UV2");
         for (i = 0; i < num_verts; ++i)
           t3.push(mu.read_floatlist$1(2));
-      else if (type === $.MuEnum_ET_MESH_NORMALS)
+      } else if (type === $.MuEnum_ET_MESH_NORMALS) {
+        $.Primitives_printString("MuMesh NORMALS");
         for (i = 0; i < num_verts; ++i)
           t4.push(mu.read_floatlist$1(3));
-      else if (type === $.MuEnum_ET_MESH_TANGENTS)
+      } else if (type === $.MuEnum_ET_MESH_TANGENTS) {
+        $.Primitives_printString("MuMesh TANGENTS");
         for (i = 0; i < num_verts; ++i)
           t5.push(mu.read_quaternion$0());
-      else if (type === $.MuEnum_ET_MESH_BONE_WEIGHTS)
+      } else if (type === $.MuEnum_ET_MESH_BONE_WEIGHTS) {
+        $.Primitives_printString("MuMesh WEIGHTS");
         for (i = 0; i < num_verts; ++i)
           t6.push($.MuBoneWeight$read(mu));
-      else if (type === $.MuEnum_ET_MESH_BIND_POSES) {
+      } else if (type === $.MuEnum_ET_MESH_BIND_POSES) {
+        $.Primitives_printString("MuMesh BIND POSES");
         num_poses = mu.read_int$0();
         for (i = 0; i < num_poses; ++i)
           t7.push(mu.read_floatlist$1(12));
-      } else if (type === $.MuEnum_ET_MESH_TRIANGLES)
+      } else if (type === $.MuEnum_ET_MESH_TRIANGLES) {
+        $.Primitives_printString("MuMesh TRIANGLES");
         for (t9 = mu.read_int$0() / 3, i = 0; i < t9; ++i)
           t8.push(mu.read_intlist$1(3));
-      else
+      } else
         throw $.wrapException("Value Error: " + type + " is not a subtype of MuMesh");
-      type = mu.read_int$0();
     }
   },
   static: {
@@ -1043,6 +853,7 @@ MuRenderer: {"": "Object;castShadows,receiveShadows,materials",
   "+write:1:0": 0,
   MuRenderer$read$1: function(mu) {
     var t1, t2, t3;
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
     t1 = mu.version;
     if (t1 == null)
       throw t1.$gt();
@@ -1089,6 +900,7 @@ MuSkinnedMeshRenderer: {"": "Object;materials,bones,center,size,quality,updateWh
   "+write:1:0": 0,
   MuSkinnedMeshRenderer$read$1: function(mu) {
     var num_mat, i, t1, nBones;
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
     num_mat = mu.read_int$0();
     for (i = 0; i < num_mat; ++i)
       this.materials.push(mu.read_int$0());
@@ -1150,7 +962,29 @@ MuColliderMesh: {"": "MuCollider_Base;isTrigger,convex,mesh,type",
     mu.write_byte$1(this.convex);
     this.mesh.write$1(mu);
   },
-  "+write:1:0": 0
+  "+write:1:0": 0,
+  MuColliderMesh$read$2: function(type, mu) {
+    var t1, t2, t3;
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
+    t1 = mu.data;
+    t2 = mu._liblib6$_offset;
+    mu.set$offset(mu, $.$add$ns(t2, 1));
+    t3 = $.getInterceptor$asx(t1);
+    this.isTrigger = t3.$index(t1, t2);
+    t2 = mu._liblib6$_offset;
+    mu.set$offset(mu, $.$add$ns(t2, 1));
+    this.convex = t3.$index(t1, t2);
+    this.mesh = $.MuMesh$read(mu);
+  },
+  static: {
+MuColliderMesh$read: function(type, mu) {
+  var t1 = new $.MuColliderMesh(null, null, null, type);
+  t1.MuColliderMesh$read$2(type, mu);
+  return t1;
+},
+
+"+new MuColliderMesh$read:2:0": 0}
+
 },
 
 "+MuColliderMesh": 0,
@@ -1165,7 +999,25 @@ MuColliderSphere: {"": "MuCollider_Base;isTrigger,radius,center,type",
     mu.write_float$1(this.radius);
     mu.write_vector$1(this.center);
   },
-  "+write:1:0": 0
+  "+write:1:0": 0,
+  MuColliderSphere$read$2: function(type, mu) {
+    var t1;
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
+    t1 = mu._liblib6$_offset;
+    mu.set$offset(mu, $.$add$ns(t1, 1));
+    this.isTrigger = $.$index$asx(mu.data, t1);
+    this.radius = mu.read_float$0();
+    this.center = mu.read_floatlist$1(3);
+  },
+  static: {
+MuColliderSphere$read: function(type, mu) {
+  var t1 = new $.MuColliderSphere(null, null, null, type);
+  t1.MuColliderSphere$read$2(type, mu);
+  return t1;
+},
+
+"+new MuColliderSphere$read:2:0": 0}
+
 },
 
 "+MuColliderSphere": 0,
@@ -1184,7 +1036,9 @@ MuColliderCapsule: {"": "MuCollider_Base;isTrigger,radius,height,direction,cente
   },
   "+write:1:0": 0,
   MuColliderCapsule$read$2: function(type, mu) {
-    var t1 = mu._liblib6$_offset;
+    var t1;
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
+    t1 = mu._liblib6$_offset;
     mu.set$offset(mu, $.$add$ns(t1, 1));
     this.isTrigger = $.$index$asx(mu.data, t1);
     this.radius = mu.read_float$0();
@@ -1215,7 +1069,25 @@ MuColliderBox: {"": "MuCollider_Base;isTrigger,size,center,type",
     mu.write_vector$1(this.size);
     mu.write_vector$1(this.center);
   },
-  "+write:1:0": 0
+  "+write:1:0": 0,
+  MuColliderBox$read$2: function(type, mu) {
+    var t1;
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
+    t1 = mu._liblib6$_offset;
+    mu.set$offset(mu, $.$add$ns(t1, 1));
+    this.isTrigger = $.$index$asx(mu.data, t1);
+    this.size = mu.read_floatlist$1(3);
+    this.center = mu.read_floatlist$1(3);
+  },
+  static: {
+MuColliderBox$read: function(type, mu) {
+  var t1 = new $.MuColliderBox(null, null, null, type);
+  t1.MuColliderBox$read$2(type, mu);
+  return t1;
+},
+
+"+new MuColliderBox$read:2:0": 0}
+
 },
 
 "+MuColliderBox": 0,
@@ -1228,6 +1100,7 @@ MuSpring: {"": "Object;spring,damper,targetPosition",
   },
   "+write:1:0": 0,
   MuSpring$read$1: function(mu) {
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
     this.spring = mu.read_float$0();
     this.damper = mu.read_float$0();
     this.targetPosition = mu.read_float$0();
@@ -1255,6 +1128,7 @@ MuFriction: {"": "Object;extremumSlip,extremumValue,asymptoteSlip,asymptoteValue
   },
   "+write:1:0": 0,
   MuFriction$read$1: function(mu) {
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
     this.extremumSlip = mu.read_float$0();
     this.extremumValue = mu.read_float$0();
     this.asymptoteSlip = mu.read_float$0();
@@ -1277,6 +1151,7 @@ MuFriction$read: function(mu) {
 MuColliderWheel: {"": "MuCollider_Base;mass,radius,suspensionDistance,center,suspensionSpring,forwardFriction,sidewaysFriction,type",
   write$1: function(mu) {
     var t1;
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
     mu.write_int$1($.MuEnum_ET_WHEEL_COLLIDER);
     mu.write_float$1(this.mass);
     mu.write_float$1(this.radius);
@@ -1304,6 +1179,7 @@ MuColliderWheel: {"": "MuCollider_Base;mass,radius,suspensionDistance,center,sus
   },
   "+write:1:0": 0,
   MuColliderWheel$read$1: function(mu) {
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
     this.mass = mu.read_float$0();
     this.radius = mu.read_float$0();
     this.suspensionDistance = mu.read_float$0();
@@ -1339,6 +1215,7 @@ MuCamera: {"": "Object;clearFlags,backgroundColor,cullingMask,orthographic,fov,n
   },
   "+write:1:0": 0,
   MuCamera$read$1: function(mu) {
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
     this.clearFlags = mu.read_int$0();
     this.backgroundColor = mu.read_floatlist$1(4);
     this.cullingMask = mu.read_int$0();
@@ -1372,6 +1249,7 @@ MuLight: {"": "Object;type,intensity,range,color,spotAngle",
   },
   "+write:1:0": 0,
   MuLight$read$1: function(mu) {
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
     this.type = mu.read_int$0();
     this.intensity = mu.read_float$0();
     this.range = mu.read_float$0();
@@ -1433,40 +1311,55 @@ MuObject: {"": "Object;name,children>,materials,textures,transform,tag_and_layer
   "+write:1:0": 0,
   MuObject$read$1: function(mu) {
     var t1, t2, t3, entryType, t4, mat_count, i, tex_count;
+    $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(this))));
     this.transform = $.MuTransform$read(mu);
     for (t1 = mu.data, t2 = $.getInterceptor$asx(t1), t3 = this.textures; $.$gt$n(t2.get$length(t1), mu._liblib6$_offset) === true;) {
       entryType = mu.read_int$0();
-      if (entryType === $.MuEnum_ET_CHILD_TRANSFORM_START)
+      if (entryType === $.MuEnum_ET_CHILD_TRANSFORM_START) {
+        $.Primitives_printString("MuObject START");
         this.children.push($.MuObject$read(mu));
-      else if (entryType === $.MuEnum_ET_CHILD_TRANSFORM_END)
-        ;
-      else if (entryType === $.MuEnum_ET_TAG_AND_LAYER) {
+      } else if (entryType === $.MuEnum_ET_CHILD_TRANSFORM_END) {
+        $.Primitives_printString("MuObject END TRANSFORM");
+        break;
+      } else if (entryType === $.MuEnum_ET_TAG_AND_LAYER) {
+        $.Primitives_printString("MuObject TAG & LAYER");
         t4 = new $.MuTagLayer(null, null);
+        $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(t4))));
         t4.tag = mu.read_string$0();
         t4.layer = mu.read_int$0();
         this.tag_and_layer = t4;
-      } else if ($.JSArray_methods.contains$1($.get$muColliders(), entryType))
+      } else if ($.JSArray_methods.contains$1($.get$muColliders(), entryType)) {
+        $.Primitives_printString("MuObject COLLIDER");
         this.collider = $.MuCollider(mu, entryType);
-      else if (entryType === $.MuEnum_ET_MESH_FILTER)
+      } else if (entryType === $.MuEnum_ET_MESH_FILTER) {
+        $.Primitives_printString("MuObject MESH FILTER");
         this.shared_mesh = $.MuMesh$read(mu);
-      else if (entryType === $.MuEnum_ET_MESH_RENDERER)
+      } else if (entryType === $.MuEnum_ET_MESH_RENDERER) {
+        $.Primitives_printString("MuObject MESH RENDERER");
         this.renderer = $.MuRenderer$read(mu);
-      else if (entryType === $.MuEnum_ET_SKINNED_MESH_RENDERER)
+      } else if (entryType === $.MuEnum_ET_SKINNED_MESH_RENDERER) {
+        $.Primitives_printString("MuObject SKINNED MESH RENDERER");
         this.skinned_mesh_renderer = $.MuSkinnedMeshRenderer$read(mu);
-      else if (entryType === $.MuEnum_ET_ANIMATION)
+      } else if (entryType === $.MuEnum_ET_ANIMATION) {
+        $.Primitives_printString("MuObject ANIMATION");
         this.animation = $.MuAnimation$read(mu);
-      else if (entryType === $.MuEnum_ET_CAMERA)
+      } else if (entryType === $.MuEnum_ET_CAMERA) {
+        $.Primitives_printString("MuObject CAMERA");
         this.camera = $.MuCamera$read(mu);
-      else if (entryType === $.MuEnum_ET_LIGHT)
+      } else if (entryType === $.MuEnum_ET_LIGHT) {
+        $.Primitives_printString("MuObject LIGHT");
         this.light = $.MuLight$read(mu);
-      else if (entryType === $.MuEnum_ET_MATERIALS) {
+      } else if (entryType === $.MuEnum_ET_MATERIALS) {
+        $.Primitives_printString("MuObject MATERIALS");
         mat_count = mu.read_int$0();
         for (i = 0; i < mat_count; ++i)
           this.materials.push($.MuMaterial$read(mu));
       } else if (entryType === $.MuEnum_ET_TEXTURES) {
+        $.Primitives_printString("MuObject TEXTURES");
         tex_count = mu.read_int$0();
         for (i = 0; i < tex_count; ++i) {
           t4 = new $.MuTexture(null, null);
+          $.Primitives_printString("Read => " + $.S(new $.TypeImpl($.getRuntimeTypeString(t4))));
           t4.name = mu.read_string$0();
           t4.type = mu.read_int$0();
           t3.push(t4);
@@ -1698,7 +1591,8 @@ ByteFile: {"": "Object;data,jsCompatability,buffer,_liblib6$_offset,fileLength,p
     }
   },
   read_string$0: function() {
-    var t1, t2, t3, t4, $length, charCodes;
+    var t1, t2, t3, t4, $length, charCodes, dat;
+    $.Primitives_printString("Old Offset: " + $.S(this._liblib6$_offset));
     t1 = this.data;
     if (typeof t1 !== "string" && (typeof t1 !== "object" || t1 === null || t1.constructor !== Array && !$.isJsIndexable(t1, t1[$.dispatchPropertyName])))
       return this.read_string$0$bailout(1, t1);
@@ -1725,18 +1619,28 @@ ByteFile: {"": "Object;data,jsCompatability,buffer,_liblib6$_offset,fileLength,p
       throw $.iae(t1);
     if (t4 - t1 < $length)
       throw $.wrapException("End of file exception");
+    if ($length === 0) {
+      $.Primitives_printString("Found no string");
+      $.Primitives_printString("New Offset: " + $.S(this._liblib6$_offset));
+      return "";
+    }
+    $.Primitives_printString("New Offset: " + $.S(t1) + " Length: " + $.S($length));
     t1 = $._ListRange$(this.read_bytes$1($length), 0, null);
     t2 = t1._liblib7$_offset;
     t3 = t1._liblib7$_length;
     if (typeof t3 !== "number")
       throw $.iae(t3);
     charCodes = new $.Utf8Decoder(new $._ListRangeIteratorImpl(t1._liblib7$_source, t2 - 1, t2 + t3), 65533, null).decodeRest$0();
-    return $.Primitives_stringFromCharCodes(charCodes);
+    dat = $.Primitives_stringFromCharCodes(charCodes);
+    $.Primitives_printString("String read -> " + dat);
+    $.Primitives_printString("Newer Offset: " + $.S(this._liblib6$_offset));
+    return dat;
   },
   "+read_string:0:0": 0,
   read_string$0$bailout: function(state0, t1, t2, t3, t4, t5, $length) {
     switch (state0) {
       case 0:
+        $.Primitives_printString("Old Offset: " + $.S(this._liblib6$_offset));
         t1 = this.data;
       case 1:
         state0 = 0;
@@ -1760,7 +1664,7 @@ ByteFile: {"": "Object;data,jsCompatability,buffer,_liblib6$_offset,fileLength,p
         t3 = $.getInterceptor$asx(t1);
         $length = t3.$index(t1, t2);
       case 5:
-        var charCodes;
+        var charCodes, dat;
         state0 = 0;
         t1 = t3.get$length(t1);
         t2 = this._liblib6$_offset;
@@ -1768,13 +1672,22 @@ ByteFile: {"": "Object;data,jsCompatability,buffer,_liblib6$_offset,fileLength,p
           throw $.iae(t2);
         if ($.$lt$n($.$sub$n(t1, t2), $length) === true)
           throw $.wrapException("End of file exception");
+        if ($.$eq($length, 0)) {
+          $.Primitives_printString("Found no string");
+          $.Primitives_printString("New Offset: " + $.S(this._liblib6$_offset));
+          return "";
+        }
+        $.Primitives_printString("New Offset: " + $.S(this._liblib6$_offset) + " Length: " + $.S($length));
         t1 = $._ListRange$(this.read_bytes$1($length), 0, null);
         t2 = t1._liblib7$_offset;
         t3 = t1._liblib7$_length;
         if (typeof t3 !== "number")
           throw $.iae(t3);
         charCodes = new $.Utf8Decoder(new $._ListRangeIteratorImpl(t1._liblib7$_source, t2 - 1, t2 + t3), 65533, null).decodeRest$0();
-        return $.Primitives_stringFromCharCodes(charCodes);
+        dat = $.Primitives_stringFromCharCodes(charCodes);
+        $.Primitives_printString("String read -> " + dat);
+        $.Primitives_printString("Newer Offset: " + $.S(this._liblib6$_offset));
+        return dat;
     }
   },
   read_quaternion$0: function() {
