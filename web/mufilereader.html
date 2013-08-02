@@ -22,27 +22,26 @@
     <script src="packages/browser/interop.js"></script>
     <script>
       var scene = new THREE.Scene();
-      var camera = new THREE.PerspectiveCamera( 75, 500/500, 0.1, 1000 );
+      var camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 100 );
       
       var renderer = new THREE.CanvasRenderer();
       
-      renderer.setSize( 500, 500);
+      renderer.setSize( window.innerWidth, window.innerHeight);
       document.body.appendChild( renderer.domElement );
       
       var target = null;
-      camera.position.z = 5;
-      
+      camera.position.z = 7;
+      var zoomIn = true;
       var render = function () {
         requestAnimationFrame(render);
         if (target != null) {
-            target.rotation.x += 0.01;
-            target.rotation.y += 0.01;
+          target.rotation.x += 0.01;
         }
         renderer.render(scene, camera);
       };
       
       var MuObjects = {};
-      function recurseData (name, l) {
+      function recurseData (name, l, first) {
         console.log("Recursing!");
         if (l.length == 6) {
           var geom = new THREE.Geometry();
@@ -58,14 +57,15 @@
             geom.computeFaceNormals();
           }
           var mesh = new THREE.Mesh( geom, new THREE.MeshBasicMaterial({color: 'red', wireframe:true}));
+          if (!first) {
           mesh.position = new THREE.Vector3(l[0][0], l[0][1], l[0][2]);
-          mesh.useQuaternion = true;
           mesh.quaternion = new THREE.Quaternion(l[1][0],l[1][1],l[1][2],l[1][3]);
           mesh.scale.set(l[2][0],l[2][1],l[2][2]);
           mesh.updateMatrix();
+          }
           if (l[5].length != 0) {
            for (var i = 0; i < l[5].length; i++) {
-             mesh.add(recurseData(name, l[5][i]));
+             mesh.add(recurseData(name, l[5][i], false));
            }   
           }
           return mesh;
@@ -77,7 +77,7 @@
       function addData (name, data) {
           console.log(data);
           MuObjects[name] = new THREE.Object3D();
-          MuObjects[name].add(recurseData(name, data));
+          MuObjects[name].add(recurseData(name, data, true));
           scene.add(MuObjects[name]);
           target = MuObjects[name];
       }
